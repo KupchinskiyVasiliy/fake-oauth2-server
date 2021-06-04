@@ -10,17 +10,17 @@
   "author": "Bence Eros <ebence88@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.17.1",
+    "body-parser": "^1.19.0",
     "dotenv": "^6.2.0",
-    "express": "^4.15.2",
-    "express-session": "^1.15.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
     "morgan": "^1.9.1",
     "randomstring": "^1.1.5",
-    "underscore": "^1.8.3"
+    "underscore": "^1.13.1"
   },
   "devDependencies": {
     "jasmine": "^2.6.0",
     "node-fetch": "^1.6.3",
-    "node-mocks-http": "^1.6.1"
+    "node-mocks-http": "^1.10.1"
   }
 }

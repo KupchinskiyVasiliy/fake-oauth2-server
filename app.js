@@ -18,7 +18,7 @@ const EXPECTED_CLIENT_ID = process.env.EXPECTED_CLIENT_ID || "dummy-client-id";
 const EXPECTED_CLIENT_SECRET = process.env.EXPECTED_CLIENT_SECRET || "dummy-client-secret";
 const AUTH_REQUEST_PATH = process.env.AUTH_REQUEST_PATH || "/o/oauth2/v2/auth";
 const ACCESS_TOKEN_REQUEST_PATH = process.env.ACCESS_TOKEN_REQUEST_PATH || "/oauth2/v4/token";
-const USERINFO_REQUEST_URL = process.env.TOKENINFO_REQUEST_URL || "/oauth2/v3/userinfo";
+const USERINFO_REQUEST_URL = process.env.USERINFO_REQUEST_URL || "/oauth2/v3/userinfo";
 const TOKENINFO_REQUEST_URL = process.env.TOKENINFO_REQUEST_URL || "/oauth2/v3/tokeninfo";
 const PERMITTED_REDIRECT_URLS = process.env.PERMITTED_REDIRECT_URLS ? process.env.PERMITTED_REDIRECT_URLS.split(",") : ["http://localhost:8181/auth/login"];
 
@@ -111,23 +111,12 @@ function validateAccessTokenRequest(req, res) {
       msg = "this token is already expired";
     }
   }
-  // if (!validateClientId(req.query.client_id, res)) {
-  //   success = false;
-  // }
-  // if (!validateAuthorizationHeader(req.headers["authorization"])) {
-  //   success = false;
-  //   msg = errorMsg("Authorization header", req.headers["authorization"], "Basic ZHVtbXktY2xpZW50LWlkOmR1bW15LWNsaWVudC1zZWNyZXQ=");
-  // }
   if (!validateClientId(req.body.client_id, res)) {
     success = false;
   }
   if (req.body.client_secret !== EXPECTED_CLIENT_SECRET) {
     success = false;
     msg = errorMsg("client_secret", EXPECTED_CLIENT_SECRET, req.body.client_secret);
-  }
-  if (req.session.redirect_uri !== req.body.redirect_uri) {
-    success = false;
-    msg = errorMsg("redirect_uri", req.session.redirect_uri, req.body.redirect_uri);
   }
   if (!success) {
     const params = {};
@@ -241,20 +230,10 @@ app.post(ACCESS_TOKEN_REQUEST_PATH, (req, res) => {
   res.end();
 });
 
-app.get(USERINFO_REQUEST_URL, (req, res) => {
-  const token_info = authHeader2personData[req.headers["authorization"]];
-  if (token_info !== undefined) {
-    console.log("userinfo response", token_info);
-    if(!validateTokenExpiration(token_info.date_of_creation, token_info.expires_in)) {
-      res.status(401);
-      res.send("this token is already expired");
-    }
-    else{
-      res.send(token_info);
-    }
-  } else {
-    res.status(404);
-  }
+app.post(USERINFO_REQUEST_URL, (req, res) => {
+  res.send({
+    email: 'gkovalev@onevizion.com'
+  });
   res.end();
 });
 

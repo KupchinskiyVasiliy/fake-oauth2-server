@@ -1,4 +1,7 @@
 .idea
-fake-oauth2.iml
+*.iml
+*.ipr
+*.iws
 node_modules
 fake-oauth2-server.iml
+sslcert
