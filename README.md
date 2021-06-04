@@ -33,3 +33,5 @@ Fill next values:
 | User Select SQL query | `select u.user_id from (select user_id from users where email = :email order by last_login_date desc) u where rownum = 1` |
 
 `:email` parameter will always `gkovalev@onevizion.com`
+
+Restart OneVizion server after changes!
